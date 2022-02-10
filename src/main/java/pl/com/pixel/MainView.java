@@ -11,24 +11,14 @@ import javafx.stage.Stage;
 public class MainView extends StackPane {
 
     private final Button button = new Button("New window");
-    private final Property<AuxView> auxViewProperty = new SimpleObjectProperty<>();
 
     public MainView() {
         getChildren().add(button);
 
-        auxViewProperty.addListener((observable, oldValue, auxView) -> {
-            if (oldValue != null) {
-                oldValue.getScene().getWindow().hide();
-            }
-            if (auxView != null) {
+        button.setOnAction(event -> {
                 Stage stage = new Stage();
-                stage.setScene(new Scene(auxView, 200, 200));
+                stage.setScene(new Scene(new AuxView(), 200, 200));
                 stage.show();
-            }
         });
-
-        button.setOnAction(event -> auxViewProperty.setValue(new AuxView()));
-
-
     }
 }
